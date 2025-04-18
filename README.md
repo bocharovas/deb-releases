@@ -4,7 +4,7 @@ This repository contains pre-built `.deb` packages for easy installation and dis
 
 ## Available Packages
 
-- **`txt2ascii866_1.0-1.deb`**: A tool for converting text to ASCII with CP866 encoding.
+- **`txt2ascii866_1.0-1.deb`**: A tool for converting text to ASCII with CP866 encoding. This tool processes input as a sequence of 16-bit little-endian words. Each word contains two characters, with the first stored in the lower byte. Intended for systems or encodings using CP866 character representation.
 
 Feel free to explore the releases and install the packages that suit your needs.
 
@@ -18,3 +18,7 @@ To install a package from this repository, follow these steps:
    ```bash
    wget https://github.com/bocharovas/deb-releases/releases/download/v1.0/txt2ascii866_1.0-1.deb
 
+2. **Install the package using dpkg.
+
+   ```bash
+   sudo dpkg -i txt2ascii866_1.0-1.deb
