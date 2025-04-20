@@ -1,0 +1,25 @@
+name: Update Release on Push
+
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  update-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Update GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: latest 
+          release_name: "Latest Release" 
+          body: "This release was automatically updated on push to main." 
+          draft: false
+          prerelease: false
