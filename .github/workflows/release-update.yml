@@ -18,7 +18,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: latest 
+          tag_name: v1.0 
           release_name: "Latest Release" 
           body: "This release was automatically updated on push to main." 
           draft: false
