@@ -1,9 +1,14 @@
-name: Update Release on Push
+name: 
+Create or Update Release
 
 on:
   push:
     branches:
       - main 
+
+permissions:
+  contenes: write
+  actions: read
 
 jobs:
   update-release:
@@ -13,15 +18,33 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Update GitHub Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up GitHub CLI
+        uses: cli/gh-action@v2
         with:
-          tag_name: v1.0 
-          release_name: "Latest Release" 
-          body: "This release was automatically updated on push to main." 
-          draft: false
-          prerelease: false
+          version: latest
+
+      - name: Authenticate CLI
+        run: echo "${{ secrets.GITHUB_TOKEN}}" | gh auth login --withtoken
+
+      - name: Create or Update GitHub Release
+        run: 
+          TAG="v1.0.0"
+          NAME="Release $TAG"
+          BODY="Автоматический релиз"
+
+          if gh release view "$TAG" &>/dev/null; then
+            echo "🔄 Release $TAG уже существует, обновим описание..."
+            gh release edit "$TAG" --title "$NAME" --notes "$BODY"
+          else
+            echo "🚀 Создаём новый релиз $TAG..."
+            gh release create "$TAG" --title "$NAME" --notes "$BODY"
+          fi
+        - name: Upload .deb packages
+        run: |
+          TAG="v1.0.0"
+          for file in *.deb; do
+            echo "⬆️ Загружаем $file..."
+            gh release upload "$TAG" "$file" --clobber
+          done  
 
 
