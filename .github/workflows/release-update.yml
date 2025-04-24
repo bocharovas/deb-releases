@@ -1,5 +1,4 @@
-name: 
-Create or Update Release
+name: Create or Update Release
 
 on:
   push:
@@ -39,12 +38,10 @@ jobs:
             echo "🚀 Создаём новый релиз $TAG..."
             gh release create "$TAG" --title "$NAME" --notes "$BODY"
           fi
-        - name: Upload .deb packages
+      - name: Upload .deb packages
         run: |
           TAG="v1.0.0"
           for file in *.deb; do
             echo "⬆️ Загружаем $file..."
             gh release upload "$TAG" "$file" --clobber
           done  
-
-
