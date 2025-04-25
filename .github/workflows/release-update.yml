@@ -6,7 +6,7 @@ on:
       - main 
 
 permissions:
-  contenes: write
+  contents: write
   actions: read
 
 jobs:
