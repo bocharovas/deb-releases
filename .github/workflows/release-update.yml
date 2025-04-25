@@ -26,7 +26,7 @@ jobs:
         run: echo "${{ secrets.GITHUB_TOKEN}}" | gh auth login --with-token
 
       - name: Create or Update GitHub Release
-        run: 
+        run: | 
           TAG="v1.0"
           NAME="Release $TAG"
           BODY="Автоматический релиз"
