@@ -6,6 +6,7 @@ This repository contains pre-built `.deb` packages for easy installation and dis
 
 - **`txt2ascii866_1.0-1.deb`**: A tool for converting text to ASCII with CP866 encoding. This tool processes input as a sequence of 16-bit little-endian words. Each word contains two characters, with the first stored in the lower byte. Intended for systems or encodings using CP866 character representation.
 
+- **`txt2ascii866_1.0-2.deb`**: A tool for converting text to ASCII with CP866 encoding. This tool processes input as a sequence of 16-bit little-endian words. Each word contains two characters, with the first stored in the lower byte. Intended for systems or encodings using CP866 character representation. New in version 1.0-2: Added support for the Celsius degree symbol (°).
 Feel free to explore the releases and install the packages that suit your needs.
 
 ## Installation

@@ -17,31 +17,36 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-          #      - name: Set up GitHub CLI
-          #        uses: cli/gh-action@v2.2.2
-          #        with:
-          #        version: latest
-
       - name: Authenticate CLI
-        run: echo "${{ secrets.GITHUB_TOKEN}}" | gh auth login --with-token
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+
+      - name: Find version from .deb file
+        id: get_version
+        run: |
+          FILE=$(ls *.deb | head -n1)  # Берём первый .deb файл
+          echo "DEB FILE: $FILE"
+          VERSION=$(echo "$FILE" | sed -n 's/.*_\([0-9.]\+-[0-9]\+\)\.deb/\1/p')
+          echo "VERSION: $VERSION"
+          echo "TAG=v$VERSION" >> $GITHUB_ENV
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Create or Update GitHub Release
-        run: | 
-          TAG="v1.0"
-          NAME="Release $TAG"
-          BODY="Автоматический релиз"
+        run: |
+          NAME="Release $VERSION"
+          BODY="Автоматический релиз $VERSION"
 
           if gh release view "$TAG" &>/dev/null; then
-            echo "🔄 Release $TAG уже существует, обновим описание..."
+            echo "🔄 Release $TAG уже существует, обновляем описание..."
             gh release edit "$TAG" --title "$NAME" --notes "$BODY"
           else
             echo "🚀 Создаём новый релиз $TAG..."
             gh release create "$TAG" --title "$NAME" --notes "$BODY"
           fi
+
       - name: Upload .deb packages
         run: |
-          TAG="v1.0"
           for file in *.deb; do
             echo "⬆️ Загружаем $file..."
             gh release upload "$TAG" "$file" --clobber
-          done  
+          done
+
