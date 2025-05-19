@@ -5,7 +5,7 @@ module.exports = {
   maxMessageLength: 64,
   minMessageLength: 3,
   questions: ['type', 'scope', 'subject', 'body', 'breaking', 'issues', 'lerna'],
-  scopes: ['txt2ascii866', 'changelog.config.js'],
+  scopes: ['txt2ascii866', 'changelog.config.js', 'package.json'],
 
   types: {
     chore: {
